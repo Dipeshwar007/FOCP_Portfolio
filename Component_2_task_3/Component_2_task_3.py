@@ -40,6 +40,7 @@ def email_checking(user_email):
         if (re.search(regex, user_email)):
             valid = True
         else:
+            print("Invalid Email ID")
             exit()
     else:
         exit()
