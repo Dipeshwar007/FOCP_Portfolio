@@ -21,7 +21,7 @@ else:
     quest = input("What is your quest? \n->")
 
     # Quest processed.
-    if quest.upper() == "GRAIL":
+    if "GRAIL" in quest.upper():
 
         # Colour input is taken to match with the name's first letter.
         colour = input("What is your favourite colour? \n->")

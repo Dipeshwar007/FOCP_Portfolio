@@ -6,6 +6,9 @@
 # Heading printed
 print("\nSwallow Speed Analysis: Version 1.0 \n")
 
+# Import mean
+from statistics import mean
+
 # File opened
 file_opened = open('/Users/dipeshwarshah/Desktop/Test/Component_2_Task_2/Bird-speed-data.txt','r')
 
@@ -55,10 +58,12 @@ def checking_user_entered_data(user_input):
             data_file = open('/Users/dipeshwarshah/Desktop/Test/Component_2_Task_2/Bird-speed-data.txt','a')
             data_file.write(user_input + '\n')
             print("Reading Saved")
+            data_file.close()
         elif has_E == True and has_alphabet == True:
             data_file = open('/Users/dipeshwarshah/Desktop/Test/Component_2_Task_2/Bird-speed-data.txt','a')
             data_file.write(user_input + '\n')
             print("Reading Saved")
+            data_file.close()
         else:
             print("The data type not match.") # error data timeout
             error_data += 1          
@@ -79,20 +84,22 @@ def data_manupulate(reading_data):
 
     kmph = []           # kmph list is defined to append data converted to kmph
     mph = []            # mph list is defined to append data converted to mph
-
+    Mean_value = []
 
     # For loop to convert every data to its suitable format
     for data in reading_data:
         count += 1
 
         if data[0].upper()=="U":
-            converted_speed_in_KMPH = int(float(data[1:-1]))*1.61 # all values of E in kmph format
+            converted_speed_in_KMPH = int(float(data[1:-1])) # all values of E in kmph format
             kmph.append(converted_speed_in_KMPH)
             sum_in_MPH += converted_speed_in_KMPH
+            Mean_value.append(converted_speed_in_KMPH)
         else:
             converted_speed_in_MPH = int(float(data[1:-1]))/1.61 # all values of U in mph format
             mph.append(converted_speed_in_MPH)
             sum_in_KMPH += converted_speed_in_MPH
+            Mean_value.append(converted_speed_in_MPH)
     
     # For loop to convert every kilometer per hour data in to mile per hour
     for data in kmph:
@@ -101,11 +108,11 @@ def data_manupulate(reading_data):
 
 
     max_speed = max(mph)    # Maximum speed in mile per hour
-    min_speed = min(mph)    # Minimum speed in mile per hour
+    min_speed = min(kmph)    # Minimum speed in mile per hour
 
 
     max_speed_kmph = max(mph)*1.61      # Maximum speed in kilometer per hour
-    min_speed_kmph = min(mph)*1.61      # Minimun speed in kilometer per hour
+    min_speed_kmph = min(kmph)*1.61           # Minimun speed in kilometer per hour
 
     # Maximum in kmph and mph an vise versa is printed
     print("Max Speed: ",f"{max_speed:.2f}","MPH,",f"{max_speed_kmph:.2f}","KPH.")
@@ -115,9 +122,9 @@ def data_manupulate(reading_data):
     # The average Finding mechanism
     kmph_sum_to_mph = sum_in_KMPH / 1.61           # kmph sum is converted to mph sum
     Main_sum = sum_in_MPH + kmph_sum_to_mph        # Total sum is calculated
-    average_value_of_all_data = Main_sum / count   # Average of total is calculated in mph
+    average_value_of_all_data = mean(Mean_value)   # Average of total is calculated in mph
 
-    print("Avg Speed: ",f"{(average_value_of_all_data/1.61):.2f}","MPH,",f"{(average_value_of_all_data):.2f}","KPH.")
+    print("Avg Speed: ",f"{(average_value_of_all_data):.2f}","MPH,",f"{(average_value_of_all_data)*1.61:.2f}","KPH.")
     
     return (' ') # To return Nothing at last and comeover none output
 
